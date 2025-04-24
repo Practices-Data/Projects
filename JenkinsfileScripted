@@ -29,7 +29,7 @@ stage('Depoy application into Tomcat'){
 sshagent(['4c0bc7e5-e214-4f47-9463-293e51e92efd']) {
                 sh "scp -o StrictHostKeyChecking=no target/demo.war ec2-user@35.154.32.179:/opt/apache-tomcat-9.0.104/webapps/"
             }
- }
+ 
    }
    }//try close
   catch(e){
