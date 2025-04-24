@@ -35,6 +35,6 @@ sshagent(['4c0bc7e5-e214-4f47-9463-293e51e92efd']) {
       throw (e)
   }//catch
   finally{
-      notifyBuild(currentBuild.result)
+     // notifyBuild(currentBuild.result)
   }//finally
 }//node close
