@@ -48,6 +48,7 @@ post {
     }
     failure {
       echo 'Pipeline failed!'
+      
     }
   } 
 }//pipeline close
