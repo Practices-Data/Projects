@@ -3,7 +3,6 @@ pipeline{
   tools{
     maven 'maven-3.9.9'
   } 
-try{
   stages{
     stage('git check-out'){
       steps{
@@ -41,11 +40,6 @@ stage('deploy application into Tomcat'){
   } 
 }
   }//stages close
-}//try close
-catch(e){
-      currentBuild.result =  "FAILURE"
-      throw (e)
-  }//catch
 post {
     success {
       echo 'Pipeline executed successfully!'
