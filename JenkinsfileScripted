@@ -22,21 +22,15 @@ def mavenHome=tool name:"maven-3.9.9"
         sh 'echo " Deploy artifact into Nexus  "'
         sh "${mavenHome}/bin/mvn clean package deploy"
     }
-
 stage('Depoy application into Tomcat'){
- sh 'echo " Deploy the Application into Tomcat server"'
-
-sshagent(['4c0bc7e5-e214-4f47-9463-293e51e92efd']) {
-                sh "scp -o StrictHostKeyChecking=no target/demo.war ec2-user@35.154.32.179:/opt/apache-tomcat-9.0.104/webapps/"
-            }
- 
-   }
+  sh 'echo " Deploy the Application into Tomcat server"'
+  sshagent(['7deae0a8-3c94-44df-a993-5b35c4f93d61']) {
+  sh "scp -o StrictHostKeyChecking=no target/demo.war ec2-user@35.154.32.179:/opt/apache-tomcat-9.0.104/webapps/"
+}
+  }
    }//try close
   catch(e){
-      currentBuild.result =  "FAILURE"
+     // currentBuild.result =  "FAILURE"
       throw (e)
   }//catch
-  finally{
-     // notifyBuild(currentBuild.result)
-  }//finally
-}//node close
+ }//node close
