@@ -1,0 +1,75 @@
+node {
+def mavenHome=tool name:"maven-3.9.9"
+ try{
+      notifyBuild('STARTED')
+      stage('git check-out'){
+        sh 'echo " Taking the code from github"'
+    git credentialsId: 'db882271-4e7f-4b68-ae8f-db45f8e9cf66', url: 'https://github.com/Practices-Data/Projects.git'
+    }
+    stage('compile'){
+        sh 'echo " Compile the code "'
+        sh "${mavenHome}/bin/mvn compile"
+    }
+    stage('Build '){
+        sh 'echo " Build the Artifacts "'
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+     stage('Sonar '){
+        sh 'echo " Sonar-Quality check  "'
+        sh "${mavenHome}/bin/mvn clean package sonar:sonar"
+    }
+ stage('Nexus '){
+        sh 'echo " Deploy artifact into Nexus  "'
+        sh "${mavenHome}/bin/mvn clean package deploy"
+    }
+stage('Depoy application into Tomcat'){
+ sh 'echo " Deploy the Application into Tomcat server"'
+sshagent(['7deae0a8-3c94-44df-a993-5b35c4f93d61']) {
+  sh "scp -o StrictHostKeyChecking=no target/demo.war ec2-user@35.154.32.179:/opt/apache-tomcat-9.0.104/webapps/"
+   }
+  }
+ }//try close
+  catch(e){
+      currentBuild.result =  "FAILURE"
+      throw (e)
+  }//catch
+  finally{
+      notifyBuild(currentBuild.result)
+  }//finally
+}//node close
+
+def notifyBuild(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESS'
+
+  // Default values
+  def colorName = 'RED'
+  def colorCode = '#FF0000'
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    color = 'YELLOW'
+    colorCode = '#FFFF00'
+  } else if (buildStatus == 'SUCCESS') {
+    color = 'GREEN'
+    colorCode = '#00FF00'
+  } else {
+    color = 'RED'
+    colorCode = '#FF0000'
+  }
+slackSend(color: colorCode, message: summary,channel: '#uat')
+    }
+
+
+
+
+
+
+
+
+
+
+
+
