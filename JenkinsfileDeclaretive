@@ -37,10 +37,11 @@ stage('deploy application into Tomcat'){
    sh 'echo " Deploy the Application into Tomcat server"'
   sshagent(['7deae0a8-3c94-44df-a993-5b35c4f93d61']) {
   sh "scp -o StrictHostKeyChecking=no target/demo.war ec2-user@35.154.32.179:/opt/apache-tomcat-9.0.104/webapps/" 
-  }
-} 
+    }
+  } 
+}
   }//stages close
-  }//try close
+}//try close
 catch(e){
       currentBuild.result =  "FAILURE"
       throw (e)
