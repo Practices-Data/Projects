@@ -8,8 +8,8 @@ try{
     stage('git check-out'){
       steps{
         notifyBuild('STARTED')
-  
-    git branch: 'devops', credentialsId: 'db882271-4e7f-4b68-ae8f-db45f8e9cf66', url: 'https://github.com/Practices-Data/Projects.git
+    sh 'echo "Taking the code from git "'
+    git branch: 'devops', credentialsId: 'db882271-4e7f-4b68-ae8f-db45f8e9cf66', url: 'https://github.com/Practices-Data/Projects.git'
     }
   }
     stage('compile'){
