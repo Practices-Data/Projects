@@ -4,7 +4,7 @@ def mavenHome=tool name:"maven-3.9.9"
       notifyBuild('STARTED')
       stage('git check-out'){
         sh 'echo " Taking the code from github"'
-    git credentialsId: 'db882271-4e7f-4b68-ae8f-db45f8e9cf66', url: 'https://github.com/Practices-Data/Projects.git'
+    git branch: 'devops', credentialsId: 'db882271-4e7f-4b68-ae8f-db45f8e9cf66', url: 'https://github.com/Practices-Data/Projects.git'
     }
     stage('compile'){
         sh 'echo " Compile the code "'
