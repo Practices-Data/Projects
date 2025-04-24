@@ -1,3 +1,4 @@
+
 pipeline{
   agent any
   tools{
@@ -43,6 +44,7 @@ stage('deploy application into Tomcat'){
 post {
     success {
       echo 'Pipeline executed successfully!'
+      notifyBuild('SUCCESS')
     }
     failure {
       echo 'Pipeline failed!'
