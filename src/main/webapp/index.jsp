@@ -72,7 +72,7 @@
 <body>
   <header>
     <div class="logo">
-      <h2>MyWebApp</h2>
+      <h2>My dreams Adda </h2>
     </div>
     <nav>
       <a href="#home">Home</a>
