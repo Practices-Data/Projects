@@ -8,7 +8,7 @@ try{
     stage('git check-out'){
       steps{
         notifyBuild('STARTED')
-      sh 'echo " Taking the code from github"'
+  
     git branch: 'devops', credentialsId: 'db882271-4e7f-4b68-ae8f-db45f8e9cf66', url: 'https://github.com/Practices-Data/Projects.git
     }
   }
