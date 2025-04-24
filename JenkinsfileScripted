@@ -25,8 +25,10 @@ def mavenHome=tool name:"maven-3.9.9"
 
 stage('Depoy application into Tomcat'){
  sh 'echo " Deploy the Application into Tomcat server"'
+
 sshagent(['4c0bc7e5-e214-4f47-9463-293e51e92efd']) {
-   sh "scp -o StrictHostKeyChecking=no target/demo.war ec2-user@35.154.32.179:/opt/apache-tomcat-9.0.104/webapps/"
+                sh "scp -o StrictHostKeyChecking=no target/demo.war ec2-user@35.154.32.179:/opt/apache-tomcat-9.0.104/webapps/"
+            }
  }
    }
    }//try close
